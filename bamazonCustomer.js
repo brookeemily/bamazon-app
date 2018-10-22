@@ -63,15 +63,18 @@ function welcomeToBamazon() {
     }
     ])
     .then(function(answer) {
+        console.log(answer.choice);
+            connection.query("SELECT * FROM products", function(err, results) {
+                if (err) throw err;
     // console.log(answer.howMany);
     // get the information for the item chosen
     var chosenItem;
     for (var i = 0; i < results.length; i++) {
-        if (results[i].product_name === answer.choice) {
-            chosenItem = results[i]
+        if ((results[i].product_name + " " + "$" + results[i].price)  === answer.choice) {
+            chosenItem = results[i];
+            console.log(chosenItem);
         }
     }
-
     // COMPARE HOW MANY THE PERSON WANTS TO BUY WITH THE STOCK LEFT
 
     // if enough items in stuck....
@@ -104,5 +107,5 @@ else {
 }
 });
 });
-
+    });
 }
