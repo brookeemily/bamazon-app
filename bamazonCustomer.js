@@ -30,61 +30,79 @@ function welcomeToBamazon() {
     // call the data from the products table in the bamazon database
     connection.query("SELECT * FROM products", function(err, results) {
     if (err) throw err;
-    // console.log(results);
-    // console.log(results.item[0]);
-    // for (var i = 0; i < results.length; i++) {
-    //                     console.log(results[i].item_id);
-                        // console.log(results[0].item_id);
 
-        //                 choiceArray.push(results[i].product_name);
-        //                 choiceArray.push(results[i].department_name);
-        //                 choiceArray.push(results[i].price);
-        //             }
-    // start inquirer prompt
+    // START INQUIRER   
     inquirer
+    // START PROMPT
     .prompt([
+        // WHAT ITEM DO YOU WANT?
         {
-
         name: "choice",
         type: "rawlist",
         choices: function() {
             var choiceArray = [];
             for (var i = 0; i < results.length; i++) {
                 choiceArray.push(results[i].product_name);
-                // choiceArray.push(results[i].product_name);
-                // choiceArray.push(results[i].department_name);
-                // choiceArray.push(results[i].price);
             }
+
             return choiceArray;
-        }
+        },
+        message: "Welcome to Bamazon! Here are the items we have for sale today. Please type the ID of the product you would like to buy."
+    },
+    // HOW MANY DO YOU WANT?
+        {
+        name: "howMany",
+        type: "input",
+        message: "How many would you like to buy?",
+        validate: function(value) {
+            if (isNaN(value) === false) {
+              return true;
+            }
+            return false;
+          }
     }
     ])
-    .then(function() {
-    console.log("hi!");
-    });
-});
+    .then(function(answer) {
+    // console.log(answer.howMany);
+    // get the information for the item chosen
+    var chosenItem;
+    for (var i = 0; i < results.length; i++) {
+        if (results[i].product_name === answer.choice) {
+            chosenItem = results[i]
+        }
+    }
+
+    // COMPARE HOW MANY THE PERSON WANTS TO BUY WITH THE STOCK LEFT
+
+    // if enough items in stuck....
+    if (chosenItem.stock_quantity >= parseInt(answer.howMany)) {
+    // update the stock quantity in the database
+    connection.query(
+    "UPDATE products SET ? WHERE ?",
+    [
+      {
+        stock_quantity: (chosenItem.stock_quantity - parseInt(answer.howMany))
+      },
+      {
+        item_id: chosenItem.item_id
+      }
+    ],
+    function(error) {
+      if (error) throw err;
+      // Tell user that the order was successful...
+      console.log("Order placed successfully!");
+      // Go back to beginning
+      welcomeToBamazon();
+    }
+  );
 }
+else {
+  // Stock wasn't high enough :(
+  console.log("Sorry we don't have enough items to complete your order :(. Please try again...");
+  // restart!
+  welcomeToBamazon();
+}
+});
+});
 
-
-// The first should ask them the ID of the product they would like to buy.
-// The second message should ask how many units of the product they would like to buy.
-
-
-
-// Once the customer has placed the order, your application should check if your store has enough of the product to meet the customer's request.
-
-
-
-// If not, the app should log a phrase like Insufficient quantity!, and then prevent the order from going through.
-
-
-
-// However, if your store does have enough of the product, you should fulfill the customer's order.
-
-
-// This means updating the SQL database to reflect the remaining quantity.
-// Once the update goes through, show the customer the total cost of their purchase.
-
-
-
-
+}
