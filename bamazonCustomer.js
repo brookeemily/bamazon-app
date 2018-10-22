@@ -42,7 +42,7 @@ function welcomeToBamazon() {
         choices: function() {
             var choiceArray = [];
             for (var i = 0; i < results.length; i++) {
-                choiceArray.push(results[i].product_name);
+                choiceArray.push(results[i].product_name + " " + "$" + results[i].price);
             }
 
             return choiceArray;
@@ -90,7 +90,7 @@ function welcomeToBamazon() {
     function(error) {
       if (error) throw err;
       // Tell user that the order was successful...
-      console.log("Order placed successfully!");
+      console.log("Order placed successfully! Your order costs: $" + (chosenItem.price * answer.howMany));
       // Go back to beginning
       welcomeToBamazon();
     }
