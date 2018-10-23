@@ -86,7 +86,6 @@ function viewLowInventory() {
                 console.log("Item ID: " + results[i].item_id + " | Product Name: " +  results[i].product_name + " | Quantity in Stock " + results[i].stock_quantity);
             }
         });
-        helloManager();
     }
     
 
@@ -104,7 +103,7 @@ function addInventory() {
           choices: function() {
             var choiceArray2 = [];
             for (var i = 0; i < results.length; i++) {
-              choiceArray2.push("Product Name: " + results[i].product_name + "Current Stock: " + results[i].stock_quantity);
+              choiceArray2.push("Product Name: " + results[i].product_name + " | Current Stock: " + results[i].stock_quantity);
             }
             return choiceArray2;
           },
