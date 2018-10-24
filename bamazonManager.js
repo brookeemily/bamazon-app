@@ -73,7 +73,7 @@ connection.query("SELECT * FROM products", function(err, results) {
                 console.log("Item ID: " + results[i].item_id + " | Product Name: " +  results[i].product_name + " | Price: " + "$" + results[i].price + " | Quantity in Stock " + results[i].stock_quantity);
             }
         });
-        helloManager();
+        // helloManager();
     }
 
 
@@ -119,9 +119,9 @@ function addInventory() {
         // get the information of the chosen item
         var chosenItem2;
         for (var i = 0; i < results.length; i++) {
-          if (("Product Name: " + results[i].product_name + "Current Stock: " + results[i].stock_quantity) === answer.addInventory) {
+          if (("Product Name: " + results[i].product_name + " | Current Stock: " + results[i].stock_quantity) === answer.addInventory) {
             chosenItem2 = results[i];
-            console.log(chosenItem2);
+            // console.log(chosenItem2);
           }
         }
 
@@ -181,6 +181,17 @@ function addNewProduct() {
         name: "newItemDepartment",
         type: "input",
         message: "What department is this item sold in?"
+    },
+    {
+        name: "newProductSales",
+        type: "input",
+        message: "What are the projected product sales for this item?",
+        validate: function(value) {
+          if (isNaN(value) === false) {
+            return true;
+          }
+          return false;
+        }  
     }
   ])
   .then(function(answer) {
@@ -191,7 +202,8 @@ function addNewProduct() {
         product_name: answer.newItemName,
         stock_quantity: answer.newItemStock,
         price: answer.newItemPrice,
-        department_name: answer.newItemDepartment
+        department_name: answer.newItemDepartment,
+        product_sales: answer.newProductSales
       },
       function(err) {
         if (err) throw err;

@@ -23,13 +23,6 @@ connection.connect(function(err) {
 });
 
 
-// If a manager selects Add to Inventory, your app should display a prompt that will let the manager "add more" of any item currently in the store.
-// If a manager selects Add New Product, it should allow the manager to add a completely new product to the store.
-
-
-// Running this application will first display all of the items available for sale...
-//Include the ids, names, and prices of products for sale.
-
 function helloSupervisor() {
     // START INQUIRER   
     inquirer
@@ -53,7 +46,7 @@ function helloSupervisor() {
             break;
         
         case "Create New Department":
-        createNewDept ();
+        createNewDept();
         break;
         }
     });
@@ -68,20 +61,24 @@ function viewSalesByDept() {
         
     var table = new Table({
         head: ['department_id', 'department_name', 'over_head_costs', 'product_sales', 'total_profit']
-        // table is an Array, so you can `push`, `unshift`, `splice` and friends
+        // ,  colWidths: [50, 50, 50, 50, 50]
     });
-            for (var i = 0; i < results.length; i++) {
+
+        for (var i = 0; i < results.length; i++) {
             table.push(
                 [results[i].department_id, results[i].department_name, results[i].over_head_costs, results[i].product_sales, ((results[i].product_sales) - (results[i].over_head_costs))],
-                // [results[2].department_id, results[2].department_name, results[2].over_head_costs, results[2].product_sales, ((results[2].product_sales) - (results[2].over_head_costs))],
-                // [results[3].department_id, results[3].department_name, results[3].over_head_costs, results[3].product_sales, ((results[3].product_sales) - (results[3].over_head_costs))],
-                
             );
         }
-            console.log(table.toString());
+        console.log(table.toString());
+    });
+
+
         // }
-        });
         }
+
+
+
+
 // Create New Department
     function createNewDept() {
     inquirer
@@ -109,7 +106,7 @@ function viewSalesByDept() {
       "INSERT INTO departments SET ?",
       {
         department_name: answer.addNewDept,
-       over_head_costs: answer.addOverheadCost
+       over_head_costs: answer.addOverheadCost,
       },
       function(err) {
         if (err) throw err;
