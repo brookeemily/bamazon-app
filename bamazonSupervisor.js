@@ -82,3 +82,41 @@ function viewSalesByDept() {
         // }
         });
         }
+// Create New Department
+    function createNewDept() {
+    inquirer
+  .prompt([
+    {
+        name: "addNewDept",
+        type: "input",
+        message: "What is the name of the new department?"
+    },
+    {
+        name: "addOverheadCost",
+        type: "input",
+        message: "What is the overhead cost of this department?", 
+        validate: function(value) {
+            if (isNaN(value) === false) {
+              return true;
+            }
+            return false;
+          }
+    }
+  ])
+  .then(function(answer) {
+    // when finished prompting, insert a new item into the db with that info
+    connection.query(
+      "INSERT INTO departments SET ?",
+      {
+        department_name: answer.addNewDept,
+       over_head_costs: answer.addOverheadCost
+      },
+      function(err) {
+        if (err) throw err;
+        console.log("You have added your new department to Bamazon!");
+        // re-prompt the user for if they want to bid or post
+        helloSupervisor();
+      }
+    );
+  });
+    }
