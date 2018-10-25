@@ -29,10 +29,10 @@ INSERT INTO products (product_name, department_name, price, stock_quantity, prod
 VALUES("basketball", "sports & outdoors", 15.00, 40, 1000 );
 
 INSERT INTO products (product_name, department_name, price, stock_quantity, product_sales)
-VALUES("tent", "sports & outdoors", 95.95, 20, 15000);
+VALUES("Joyce Manor LP", "music", 25, 20, 15000);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity, product_sales)
-VALUES("super rare beanie baby", "toys, kids & baby", 999.99, 2, 100000);
+VALUES("super rare beanie baby", "toys, kids & baby", 999.99, 2, 90000);
 
 INSERT INTO departments (department_name, over_head_costs)
 VALUES ("toys, kids & baby", 10000);
@@ -42,6 +42,10 @@ VALUES ("sports & outdoors", 5000);
 
 INSERT INTO departments (department_name, over_head_costs)
 VALUES ("beauty & health", 2000);
+
+INSERT INTO departments (department_name, over_head_costs)
+VALUES ("music", 5000);
+
 
 USE bamazon;
 SELECT * FROM products;
