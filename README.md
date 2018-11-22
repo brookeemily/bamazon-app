@@ -56,7 +56,7 @@ If the user selects "Add New Product..."
 The user will be prompted to enter all of the product's information
 ![Image of Terminal](https://i.imgur.com/pmhHwaE.png)
 
-The Bamazon MAnager application will update the MySQL database and confirm that the new item has been added to the store.
+The Bamazon Manager application will update the MySQL database and confirm that the new item has been added to the store.
 ![Image of Terminal](https://i.imgur.com/AjGUS3I.png)
 
 #### Bamazon Supervisor
